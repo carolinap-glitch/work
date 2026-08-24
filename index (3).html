@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller de Casos · Comités SG-SST</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Work+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue-deep:#122C56;
+  --blue:#1E4E8C;
+  --blue-bright:#2F7DDB;
+  --blue-tint:#E8F0FB;
+  --pink-deep:#9C1856;
+  --pink:#D62872;
+  --pink-bright:#F0479A;
+  --pink-tint:#FBE7F1;
+  --paper:#FBF9F4;
+  --card:#FFFFFF;
+  --ink:#152238;
+  --ink-soft:#4A5670;
+  --line:#DCE2ED;
+  --amber:#C98A1F;
+  --radius:2px;
+  --shadow: 0 1px 0 rgba(18,44,86,0.04), 0 8px 24px -12px rgba(18,44,86,0.18);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:
+    linear-gradient(180deg, rgba(18,44,86,0.02), rgba(18,44,86,0) 240px),
+    var(--paper);
+  color:var(--ink);
+  font-family:'Work Sans', sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.disp{
+  font-family:'Oswald', sans-serif;
+  text-transform:uppercase;
+  letter-spacing:0.01em;
+  color:var(--blue-deep);
+  margin:0;
+}
+.mono{font-family:'JetBrains Mono', monospace;}
+a{color:inherit;}
+button{font-family:inherit; cursor:pointer;}
+
+/* ---------- Header / masthead ---------- */
+.masthead{
+  padding:22px clamp(16px,4vw,48px) 0;
+  border-bottom:1px solid var(--line);
+  background:var(--card);
+  position:sticky; top:0; z-index:50;
+}
+.masthead-row{
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding-bottom:16px;
+}
+.brand{display:flex; align-items:center; gap:12px;}
+.brand-mark{
+  width:38px; height:38px; flex:none;
+  background:
+    conic-gradient(from 45deg, var(--blue) 0 25%, var(--pink) 0 50%, var(--blue) 0 75%, var(--pink) 0 100%);
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow: inset 0 0 0 6px var(--card);
+}
+.brand-text .eyebrow{
+  font-family:'JetBrains Mono', monospace; font-size:10px; letter-spacing:0.14em;
+  color:var(--ink-soft); text-transform:uppercase;
+}
+.brand-text h1{font-size:19px; line-height:1;}
+.reg-tag{
+  font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--blue-deep);
+  border:1px solid var(--line); padding:6px 10px; border-radius:3px; white-space:nowrap;
+  background:var(--blue-tint);
+}
+.reg-tag b{color:var(--pink-deep);}
+
+/* ---------- Folder tab nav ---------- */
+.tabbar{
+  display:flex; gap:4px; overflow-x:auto; padding-bottom:0;
+  scrollbar-width:thin;
+}
+.tabbar::-webkit-scrollbar{height:5px;}
+.tabbar::-webkit-scrollbar-thumb{background:var(--line); border-radius:4px;}
+.tab{
+  border:none;
+  padding:10px 18px 12px;
+  font-family:'Oswald', sans-serif;
+  font-size:13px;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+  white-space:nowrap;
+  background:#EEF1F6;
+  color:var(--ink-soft);
+  clip-path:polygon(10% 0,100% 0,90% 100%,0% 100%);
+  margin-right:-10px;
+  padding-right:26px;
+  transition:background .15s, color .15s;
+  flex:none;
+}
+.tab:hover{color:var(--blue-deep);}
+.tab.active{background:var(--blue); color:#fff;}
+.tab.active.pink{background:var(--pink);}
+.tab .n{font-family:'JetBrains Mono', monospace; font-size:10px; opacity:0.65; margin-right:6px;}
+
+/* ---------- layout ---------- */
+main{max-width:980px; margin:0 auto; padding:44px clamp(16px,4vw,48px) 100px;}
+.page{display:none; animation:fadeIn .35s ease;}
+.page.active{display:block;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+
+/* ---------- Home / hero ---------- */
+.hero{
+  position:relative;
+  padding:38px clamp(20px,4vw,44px);
+  background:var(--blue-deep);
+  color:#fff;
+  border-radius:4px;
+  overflow:hidden;
+  margin-bottom:34px;
+}
+.hero::before{
+  content:"";
+  position:absolute; inset:0;
+  background-image:
+    repeating-linear-gradient(135deg, rgba(255,255,255,0.035) 0 2px, transparent 2px 22px);
+}
+.hero::after{
+  content:"";
+  position:absolute; right:-60px; top:-60px; width:220px; height:220px;
+  background:radial-gradient(circle at center, var(--pink-bright) 0%, transparent 70%);
+  opacity:0.5;
+}
+.hero-inner{position:relative; z-index:2;}
+.hero .eyebrow{
+  font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.16em;
+  color:var(--pink-bright); text-transform:uppercase; display:block; margin-bottom:10px;
+}
+.hero h2{color:#fff; font-size:clamp(28px,4.2vw,42px); line-height:1.04; max-width:14ch;}
+.hero p.lead{
+  font-family:'Work Sans'; font-style:italic; color:#C9D6EA; max-width:52ch;
+  margin-top:14px; font-size:15px; line-height:1.6;
+}
+.hero-tags{display:flex; gap:10px; flex-wrap:wrap; margin-top:22px;}
+.hero-tags span{
+  font-family:'JetBrains Mono', monospace; font-size:11px; color:#fff;
+  border:1px solid rgba(255,255,255,0.25); padding:5px 10px; border-radius:20px;
+}
+
+.section-label{
+  display:flex; align-items:center; gap:10px; margin:0 0 18px;
+}
+.section-label .num{
+  font-family:'JetBrains Mono', monospace; font-size:12px; color:#fff;
+  background:var(--blue); width:24px; height:24px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; flex:none;
+}
+.section-label.pink .num{background:var(--pink);}
+.section-label h3{font-size:15px; letter-spacing:0.08em; color:var(--ink-soft); font-weight:600;}
+
+.obj-grid{
+  display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-bottom:36px;
+}
+@media(max-width:640px){.obj-grid{grid-template-columns:1fr;}}
+.obj-card{
+  background:var(--card); border:1px solid var(--line); border-left:4px solid var(--blue);
+  padding:16px 18px; border-radius:3px; box-shadow:var(--shadow);
+}
+.obj-card:nth-child(2){border-left-color:var(--pink);}
+.obj-card:nth-child(4){border-left-color:var(--pink);}
+.obj-card .k{
+  font-family:'JetBrains Mono', monospace; font-size:10px; color:var(--ink-soft);
+  text-transform:uppercase; letter-spacing:0.1em; display:block; margin-bottom:6px;
+}
+.obj-card p{margin:0; font-size:14.5px; line-height:1.55; color:var(--ink);}
+
+.nav-cards{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+@media(max-width:760px){.nav-cards{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:480px){.nav-cards{grid-template-columns:1fr;}}
+.nav-card{
+  background:var(--card); border:1px solid var(--line); border-radius:3px; padding:18px;
+  text-align:left; display:flex; flex-direction:column; gap:8px; transition:transform .15s, box-shadow .15s;
+  box-shadow:var(--shadow); position:relative;
+}
+.nav-card:hover{transform:translateY(-3px); box-shadow:0 14px 28px -14px rgba(18,44,86,0.28);}
+.nav-card .tagno{font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--pink-deep);}
+.nav-card.blue .tagno{color:var(--blue);}
+.nav-card h4{font-family:'Oswald'; font-size:16px; color:var(--blue-deep); text-transform:uppercase; margin:0;}
+.nav-card p{margin:0; font-size:13px; color:var(--ink-soft); line-height:1.5;}
+
+/* ---------- generic content blocks ---------- */
+.lede{font-size:15.5px; line-height:1.7; color:var(--ink-soft); max-width:70ch; margin-bottom:30px;}
+.lede strong{color:var(--ink);}
+
+.chain{
+  display:flex; align-items:stretch; gap:0; margin:26px 0 36px; flex-wrap:wrap;
+}
+.chain .link{
+  flex:1 1 200px; background:var(--card); border:1px solid var(--line);
+  padding:18px 16px; position:relative;
+}
+.chain .link:not(:last-child)::after{
+  content:"→"; position:absolute; right:-14px; top:50%; transform:translateY(-50%);
+  font-family:'Oswald'; font-size:20px; color:var(--blue); z-index:2; background:var(--paper);
+  width:26px; text-align:center;
+}
+@media(max-width:700px){
+  .chain{flex-direction:column;}
+  .chain .link:not(:last-child)::after{content:"↓"; right:auto; left:16px; top:auto; bottom:-16px;}
+}
+.chain .link .k{font-family:'JetBrains Mono'; font-size:10.5px; letter-spacing:0.1em; color:var(--pink-deep); text-transform:uppercase;}
+.chain .link h4{font-family:'Oswald'; font-size:17px; color:var(--blue-deep); margin:6px 0 6px; text-transform:uppercase;}
+.chain .link p{margin:0; font-size:13px; color:var(--ink-soft); line-height:1.5;}
+.chain .link.hi{border-top:3px solid var(--blue);}
+.chain .link.hi2{border-top:3px solid var(--pink);}
+.chain .link.hi3{border-top:3px solid var(--amber);}
+
+.example-row{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:8px 0 34px;
+}
+@media(max-width:700px){.example-row{grid-template-columns:1fr;}}
+.example-row .ex{
+  background:var(--blue-tint); border-radius:3px; padding:14px 16px; font-size:13.5px; color:var(--blue-deep); line-height:1.5;
+}
+.example-row .ex b{display:block; font-family:'JetBrains Mono'; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:6px; color:var(--pink-deep);}
+
+table.law{width:100%; border-collapse:collapse; margin:0 0 36px; font-size:13.5px;}
+table.law th{
+  text-align:left; font-family:'JetBrains Mono'; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase;
+  color:#fff; background:var(--blue-deep); padding:10px 12px;
+}
+table.law td{padding:12px; border-bottom:1px solid var(--line); vertical-align:top; line-height:1.55;}
+table.law tr:nth-child(even) td{background:var(--card);}
+table.law tr:nth-child(odd) td{background:#FEFDFA;}
+table.law td.norm{font-family:'JetBrains Mono'; font-size:12.5px; color:var(--pink-deep); white-space:nowrap; font-weight:600;}
+.law-note{
+  font-size:12.5px; color:var(--ink-soft); border-left:3px solid var(--amber); padding:10px 14px;
+  background:#FFF8EC; margin:-18px 0 36px; line-height:1.6;
+}
+
+.matrix-steps{list-style:none; margin:0 0 30px; padding:0; counter-reset:step;}
+.matrix-steps li{
+  counter-increment:step; position:relative; padding:12px 0 12px 46px; border-bottom:1px dashed var(--line);
+}
+.matrix-steps li::before{
+  content:counter(step);
+  position:absolute; left:0; top:10px; width:30px; height:30px; border-radius:50%;
+  background:var(--blue); color:#fff; font-family:'JetBrains Mono'; font-size:12.5px;
+  display:flex; align-items:center; justify-content:center;
+}
+.matrix-steps li:nth-child(even)::before{background:var(--pink);}
+.matrix-steps li b{display:block; font-family:'Oswald'; font-size:14.5px; letter-spacing:0.02em; color:var(--blue-deep); text-transform:uppercase; margin-bottom:3px;}
+.matrix-steps li span{font-size:13.5px; color:var(--ink-soft); line-height:1.55;}
+
+.gtc-table{width:100%; border-collapse:collapse; font-size:13px; margin-bottom:14px;}
+.gtc-table th{background:var(--pink-deep); color:#fff; padding:9px 10px; font-family:'JetBrains Mono'; font-size:10px; text-transform:uppercase; letter-spacing:0.06em; text-align:left;}
+.gtc-table td{padding:10px; border-bottom:1px solid var(--line); background:var(--card); line-height:1.5;}
+.gtc-caption{font-size:12px; color:var(--ink-soft); font-style:italic; margin:-4px 0 34px;}
+
+/* ---------- committee intro ---------- */
+.committee-hero{
+  display:flex; gap:22px; align-items:flex-start; margin-bottom:8px; flex-wrap:wrap;
+}
+.badge{
+  flex:none; width:74px; height:74px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-family:'Oswald'; font-size:22px; color:#fff; background:var(--blue);
+  border:4px solid var(--card); box-shadow:0 0 0 2px var(--blue);
+}
+.badge.pink{background:var(--pink); box-shadow:0 0 0 2px var(--pink);}
+.committee-hero h2{font-size:clamp(24px,3.4vw,32px);}
+.committee-hero .role{font-size:14.5px; color:var(--ink-soft); line-height:1.6; max-width:66ch; margin-top:8px;}
+.committee-meta{display:flex; gap:10px; flex-wrap:wrap; margin:16px 0 38px;}
+.committee-meta span{
+  font-family:'JetBrains Mono'; font-size:11px; padding:5px 10px; border-radius:20px;
+  border:1px solid var(--line); color:var(--ink-soft);
+}
+
+/* ---------- case tag card ---------- */
+.case{
+  background:var(--card); border:1px solid var(--line); border-radius:4px; margin-bottom:30px;
+  box-shadow:var(--shadow); overflow:hidden; position:relative;
+}
+.case-head{
+  display:flex; align-items:center; gap:14px; padding:16px 22px; background:var(--blue-deep); color:#fff;
+}
+.case.pink .case-head{background:var(--pink-deep);}
+.case-head .hole{
+  width:16px; height:16px; border-radius:50%; background:var(--paper); flex:none;
+  box-shadow: inset 0 0 0 2px var(--blue-deep);
+}
+.case.pink .case-head .hole{box-shadow: inset 0 0 0 2px var(--pink-deep);}
+.case-head .tagid{font-family:'JetBrains Mono'; font-size:11.5px; letter-spacing:0.08em; opacity:0.85;}
+.case-head h4{color:#fff; font-size:18px; margin-left:2px;}
+.case-body{padding:22px;}
+.case-loc{
+  display:inline-block; font-family:'JetBrains Mono'; font-size:11px; color:var(--blue);
+  background:var(--blue-tint); padding:4px 10px; border-radius:20px; margin-bottom:14px;
+}
+.case.pink .case-loc{color:var(--pink-deep); background:var(--pink-tint);}
+.case-context{font-size:14.5px; line-height:1.65; color:var(--ink); margin-bottom:18px;}
+.case-cols{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
+@media(max-width:720px){.case-cols{grid-template-columns:1fr;}}
+.case-cols h5{
+  font-family:'JetBrains Mono'; font-size:11px; letter-spacing:0.1em; text-transform:uppercase;
+  color:var(--pink-deep); margin:0 0 10px; display:flex; align-items:center; gap:6px;
+}
+.case.pink .case-cols h5.det{color:var(--pink-deep);}
+.case-cols h5.task{color:var(--blue);}
+.case-cols ul, .case-cols ol{margin:0; padding-left:18px; font-size:13.5px; line-height:1.6; color:var(--ink-soft);}
+.case-cols li{margin-bottom:8px;}
+.case-cols ol li{color:var(--ink);}
+.case-cols ol li::marker{font-family:'JetBrains Mono'; color:var(--blue); font-weight:600;}
+
+/* ---------- plan de acción ---------- */
+.plan{
+  margin-top:6px; border:1px dashed var(--line); border-radius:3px; padding:18px 20px 6px; background:#FCFBF7;
+}
+.plan-title{
+  display:flex; align-items:center; gap:8px; margin-bottom:14px;
+}
+.plan-title .dot{width:8px; height:8px; border-radius:50%; background:var(--blue);}
+.case.pink .plan-title .dot{background:var(--pink);}
+.plan-title span{font-family:'JetBrains Mono'; font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-soft);}
+.plan-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px;}
+@media(max-width:720px){.plan-grid{grid-template-columns:1fr;}}
+.plan-card{background:var(--card); border:1px solid var(--line); border-left:3px solid var(--blue); padding:13px 15px; border-radius:2px;}
+.plan-card.b2{border-left-color:var(--pink);}
+.plan-card.b3{border-left-color:var(--amber);}
+.plan-card.b4{border-left-color:var(--blue-deep);}
+.plan-card .pk{font-family:'JetBrains Mono'; font-size:10px; letter-spacing:0.09em; text-transform:uppercase; color:var(--pink-deep); display:block; margin-bottom:7px;}
+.plan-card.b1 .pk, .plan-card.b3 .pk{color:var(--blue);}
+.plan-card ul{margin:0; padding-left:16px; font-size:13px; line-height:1.55; color:var(--ink-soft);}
+.plan-card ul li{margin-bottom:5px;}
+.plan-card p.via{margin:0; font-size:13px; line-height:1.6; color:var(--ink-soft);}
+
+/* ---------- topic pages: accidentes / sgsst / controles ---------- */
+.split{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:32px;}
+@media(max-width:720px){.split{grid-template-columns:1fr;}}
+.info-card{background:var(--card); border:1px solid var(--line); border-radius:3px; padding:18px 20px; box-shadow:var(--shadow);}
+.info-card h4{font-family:'Oswald'; font-size:15.5px; color:var(--blue-deep); text-transform:uppercase; margin-bottom:8px;}
+.info-card p, .info-card li{font-size:13.5px; line-height:1.6; color:var(--ink-soft);}
+.info-card ul, .info-card ol{margin:0; padding-left:18px;}
+.pill-row{display:flex; gap:10px; flex-wrap:wrap; margin:6px 0 30px;}
+.pill{
+  font-family:'JetBrains Mono'; font-size:11.5px; padding:8px 14px; border-radius:20px; border:1px solid var(--line);
+  color:var(--ink);
+}
+.pill.sev-leve{border-color:var(--blue); color:var(--blue);}
+.pill.sev-inc{border-color:var(--pink); color:var(--pink-deep);}
+.pill.sev-mortal{border-color:var(--ink); color:var(--ink); background:#EFEFEF;}
+.control-table{width:100%; border-collapse:collapse; font-size:13px; margin-bottom:10px;}
+.control-table th{background:var(--blue-deep); color:#fff; padding:9px 10px; font-family:'JetBrains Mono'; font-size:10px; text-transform:uppercase; letter-spacing:0.06em; text-align:left;}
+.control-table td{padding:10px; border-bottom:1px solid var(--line); background:var(--card); line-height:1.5;}
+.control-table td.lvl{font-family:'Oswald'; text-transform:uppercase; color:var(--blue-deep); font-weight:600; white-space:nowrap;}
+.priority-bar{display:flex; height:10px; border-radius:6px; overflow:hidden; margin:14px 0 30px; box-shadow:var(--shadow);}
+.priority-bar span{flex:1;}
+.priority-bar .p1{background:var(--pink-deep);}
+.priority-bar .p2{background:var(--pink-bright);}
+.priority-bar .p3{background:var(--amber);}
+.priority-bar .p4{background:var(--blue-bright);}
+.priority-bar .p5{background:var(--blue-deep);}
+.priority-labels{display:flex; justify-content:space-between; font-family:'JetBrains Mono'; font-size:10px; color:var(--ink-soft); margin:-24px 0 30px; text-transform:uppercase; letter-spacing:0.02em;}
+
+.instr-list{list-style:none; margin:0 0 36px; padding:0;}
+.instr-list li{
+  display:flex; gap:14px; padding:14px 0; border-bottom:1px solid var(--line);
+}
+.instr-list li .idx{
+  font-family:'JetBrains Mono'; font-size:12px; color:#fff; background:var(--pink); width:26px; height:26px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; flex:none;
+}
+.instr-list li:nth-child(even) .idx{background:var(--blue);}
+.instr-list li div p{margin:0; font-size:13.5px; line-height:1.6; color:var(--ink-soft);}
+.instr-list li div b{display:block; font-family:'Oswald'; font-size:14px; letter-spacing:0.02em; color:var(--blue-deep); text-transform:uppercase; margin-bottom:2px;}
+
+footer{
+  border-top:1px solid var(--line); padding:26px clamp(16px,4vw,48px); text-align:center;
+  font-family:'JetBrains Mono'; font-size:11px; color:var(--ink-soft); letter-spacing:0.03em;
+}
+footer b{color:var(--pink-deep);}
+
+.next-btn{
+  display:inline-flex; align-items:center; gap:8px; margin-top:10px;
+  background:var(--blue-deep); color:#fff; border:none; padding:12px 20px; border-radius:3px;
+  font-family:'Oswald'; font-size:13px; letter-spacing:0.06em; text-transform:uppercase;
+}
+.next-btn:hover{background:var(--blue);}
+.next-btn.pink{background:var(--pink-deep);}
+.next-btn.pink:hover{background:var(--pink);}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="masthead-row">
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div class="brand-text">
+        <span class="eyebrow">Expediente de aprendizaje · SG-SST</span>
+        <h1>Taller de Casos Prácticos</h1>
+      </div>
+    </div>
+    <div class="reg-tag">FICHA <b>01</b> / 10</div>
+  </div>
+  <nav class="tabbar" id="tabbar"></nav>
+</div>
+
+<main id="app"></main>
+
+<footer>
+  TALLER SG-SST &amp; MEDIO AMBIENTE — <b>COPASST</b> · <b>CONVIVENCIA LABORAL</b> · <b>BRIGADA DE EMERGENCIAS</b> — Colombia
+</footer>
+
+<script>
+/* ============ DATA ============ */
+
+const PAGES = [
+  {id:'inicio',      label:'Inicio',                          tab:'blue'},
+  {id:'sgsst',       label:'Sistema de Gestión SST y Ambiental', tab:'blue'},
+  {id:'accidentes',  label:'Accidentes de Trabajo',            tab:'pink'},
+  {id:'legislacion', label:'Legislación Laboral SST',          tab:'blue'},
+  {id:'ambiental',   label:'Legislación Ambiental',            tab:'pink'},
+  {id:'peligros',    label:'Identificación de Peligros',       tab:'pink'},
+  {id:'controles',   label:'Medidas de Control',               tab:'blue'},
+  {id:'copasst',     label:'COPASST',                          tab:'blue'},
+  {id:'convivencia', label:'Convivencia Laboral',              tab:'pink'},
+  {id:'brigada',     label:'Brigada de Emergencias',           tab:'blue'},
+];
+
+const COMMITTEES = {
+  copasst:{
+    tone:'blue',
+    badge:'01',
+    title:'COPASST',
+    subtitle:'Comité Paritario de Seguridad y Salud en el Trabajo',
+    role:'Órgano bipartito, integrado en igual número por representantes de la empresa y de los trabajadores, encargado de promover y vigilar el cumplimiento del Sistema de Gestión de SST: hace seguimiento a condiciones de riesgo, tramita quejas de seguridad, revisa investigaciones de accidentes y verifica que los programas de prevención se ejecuten de verdad en el sitio de trabajo.',
+    meta:['Base normativa: Res. 2013/1986 · Decreto 1072/2015','Periodo: 2 años','Naturaleza: paritario (empresa–trabajadores)'],
+    cases:[
+      {
+        id:'CASO 01', title:'Mantenimiento Insuficiente de Equipos', company:'Metales Industriales · Piezas metálicas para el sector automotriz',
+        context:'En los últimos seis meses se han reportado cinco incidentes menores —cortes y contusiones— asociados a maquinaria defectuosa en las secciones de corte y prensado.',
+        details:[
+          'Los trabajadores han presentado quejas repetidas sobre el estado de las máquinas.',
+          'Mantenimiento pospone reparaciones por restricciones presupuestarias y solo atiende averías críticas.',
+          'Las inspecciones mensuales del COPASST se han cancelado o reprogramado por falta de tiempo y recursos.',
+          'En la última reunión se habló de un sistema de reporte más efectivo, sin llegar a acuerdo.'
+        ],
+        tasks:[
+          'Analizar las causas subyacentes de los incidentes relacionados con el mantenimiento.',
+          'Proponer un plan de acción para mejorar la comunicación entre el COPASST y mantenimiento.',
+          'Diseñar estrategias de bajo costo que protejan a los trabajadores mientras se ejecutan las reparaciones.'
+        ],
+        plan:{
+          preventivo:['Cronograma de mantenimiento preventivo por horas de uso, no solo por falla reportada.','Inspección diaria de guardas por el operario antes de encender la máquina.','Bloqueo y etiquetado ("fuera de servicio") de equipos con falla crítica hasta su reparación.'],
+          comunicacion:['Canal de reporte de fallas visible (formato físico y digital) con tiempo de respuesta comprometido.','Capacitación en reporte oportuno de anomalías y en la política de "parar la línea" ante riesgo evidente.'],
+          politica:['Rubro de presupuesto anual fijo para mantenimiento preventivo, no solo correctivo.','Cumplimiento del cronograma de mantenimiento como indicador de gestión del área.'],
+          viabilidad:'Reprogramar prioridades de mantenimiento no exige inversión nueva, solo disciplina de ejecución: el costo de intervenir es menor que el de un accidente o una sanción. Es viable a corto plazo.'
+        }
+      },
+      {
+        id:'CASO 02', title:'Accidente por Falta de Señalización', company:'Construcciones del Futuro · Proyecto de edificios de oficinas, afueras de Bogotá',
+        context:'Un trabajador cayó desde tres metros de altura por falta de señalización en una zona donde se había retirado temporalmente una baranda para el paso de materiales pesados.',
+        details:[
+          'El COPASST ya había señalado el área como peligrosa en un informe previo, sin implementación inmediata.',
+          'La presión por cumplir plazos del proyecto retrasó las correcciones.',
+          'El accidente causó fractura de pierna, investigación del Ministerio de Trabajo y pausa temporal de la obra.',
+          'La gerencia alega que las medidas estaban en proceso, frenadas por falta de personal.'
+        ],
+        tasks:[
+          'Analizar las causas del accidente y el rol del COPASST en la prevención.',
+          'Proponer mejoras en identificación, señalización y mitigación de zonas de riesgo.',
+          'Diseñar un plan que garantice la implementación oportuna de las recomendaciones, incluso bajo presión de plazos.'
+        ],
+        plan:{
+          preventivo:['Inspección diaria de zonas donde se retiran barandas temporalmente, con reinstalación obligatoria al cierre de jornada.','Cierre y señalización perimetral inmediata mientras la protección esté desmontada.'],
+          comunicacion:['Charla de seguridad de 5 minutos antes de iniciar labores en zonas de riesgo.','Formación en trabajo seguro en alturas y en identificación de puntos críticos para todo el personal de obra.'],
+          politica:['Prohibir el retiro de protecciones colectivas sin autorización escrita del COPASST y sin medida compensatoria inmediata.','Investigación formal de todo accidente con participación obligatoria del COPASST.'],
+          viabilidad:'La señalización y las barreras temporales cuestan mucho menos que una investigación del Ministerio de Trabajo o la paralización de la obra. Es viable incluso bajo presión de plazos: el argumento del costo no sostiene omitirla.'
+        }
+      }
+    ]
+  },
+  convivencia:{
+    tone:'pink',
+    badge:'02',
+    title:'Comité de Convivencia Laboral',
+    subtitle:'Prevención del acoso laboral y gestión de conflictos',
+    role:'Instancia bipartita que recibe y tramita quejas relacionadas con conductas de acoso laboral y conflictos entre colaboradores, buscando una solución confidencial, imparcial y conciliatoria antes de que el caso escale a una instancia formal o legal.',
+    meta:['Base normativa: Ley 1010/2006 · Res. 2646/2008','Enfoque: riesgo psicosocial','Principio: confidencialidad e imparcialidad'],
+    cases:[
+      {
+        id:'CASO 01', title:'Conflicto Interdepartamental', company:'Tecnologías Avanzadas · Ventas vs. Producción',
+        context:'Un conflicto de un año entre ventas y producción —originado cuando ventas prometió especificaciones que producción no podía cumplir sin reconfigurar el proceso— afecta la productividad y el clima laboral.',
+        details:[
+          'Empleados evitan reuniones conjuntas y se comunican solo por correo, generando malentendidos y retrasos.',
+          'Se han registrado episodios de hostilidad verbal en reuniones interdepartamentales, con quejas formales de acoso.',
+          'El Comité intenta mediar pero carece de protocolos claros y experiencia en resolución de conflictos.',
+          'La gerencia exige una solución rápida ante el riesgo de perder clientes.'
+        ],
+        tasks:[
+          'Identificar las causas subyacentes del conflicto y las dinámicas que lo perpetúan.',
+          'Proponer un plan de mediación que involucre a todas las partes interesadas.',
+          'Desarrollar un protocolo de gestión de conflictos interdepartamentales, con formación en mediación para el Comité.'
+        ],
+        plan:{
+          preventivo:['Acuerdos de nivel de servicio (SLA) claros entre ventas y producción antes de comprometer especificaciones con un cliente.','Sesión de mediación formal facilitada por el Comité, con reglas claras de participación.'],
+          comunicacion:['Reuniones conjuntas periódicas obligatorias —no solo por correo— con actas compartidas entre ambas áreas.','Formación en comunicación asertiva y manejo de conflictos para los líderes de ambas áreas.'],
+          politica:['Protocolo escrito de mediación de conflictos interdepartamentales, con plazos definidos de respuesta.','Criterio de que ningún compromiso comercial se firme sin validación previa de producción.'],
+          viabilidad:'Exige tiempo directivo, pero previene pérdida de clientes y quejas de acoso derivadas de la tensión. Es sostenible solo si la gerencia respalda al Comité con autoridad real para exigir su cumplimiento.'
+        }
+      },
+      {
+        id:'CASO 02', title:'Quejas de Acoso no Atendidas', company:'Servicios Financieros Globales · Firma de consultoría financiera',
+        context:'Varios empleados han denunciado comentarios inapropiados y discriminación por parte de un supervisor hacia colaboradores de distintos orígenes culturales, sin que las quejas sean atendidas a tiempo.',
+        details:[
+          'No hay procedimiento claro para investigar y resolver los casos, por lo que no se ha tomado acción.',
+          'El clima laboral se deteriora: empleados se sienten inseguros y desmotivados.',
+          'Aumenta la rotación de personal por búsqueda de empleo en otras empresas.',
+          'La gerencia teme el impacto en la reputación y exige actuación inmediata del Comité.'
+        ],
+        tasks:[
+          'Evaluar el manejo actual de las quejas de acoso y las razones de la inacción.',
+          'Proponer un sistema de gestión de quejas que garantice confidencialidad y respuesta rápida.',
+          'Diseñar un programa de formación del Comité sobre gestión de quejas y ambiente inclusivo.'
+        ],
+        plan:{
+          preventivo:['Protocolo claro y difundido de recepción de quejas, con plazos máximos de investigación.','Medidas provisionales de separación entre las partes mientras se investiga un caso reportado.'],
+          comunicacion:['Canal confidencial de denuncia (línea o buzón) con comunicación de resultados generales sin exponer identidades.','Formación obligatoria en diversidad, sesgos y manejo de quejas para el Comité y los supervisores.'],
+          politica:['Política de tolerancia cero frente a discriminación, documentada y con consecuencias disciplinarias claras.','Evaluación periódica de clima laboral que incluya preguntas específicas sobre respeto y trato equitativo.'],
+          viabilidad:'El costo de implementar el protocolo es bajo frente al de la rotación de personal y el daño reputacional ya en curso. Requiere, sobre todo, compromiso visible de la alta dirección para ser creíble ante los empleados.'
+        }
+      }
+    ]
+  },
+  brigada:{
+    tone:'blue',
+    badge:'03',
+    title:'Brigada de Emergencias',
+    subtitle:'Respuesta operativa ante incendios, evacuaciones y desastres',
+    role:'Grupo de trabajadores voluntarios entrenados para primera respuesta: evacuación, control inicial de incendios, primeros auxilios y comunicación durante una emergencia, mientras llegan los organismos de socorro externos.',
+    meta:['Base normativa: Decreto 1072/2015 · NFPA (referencia técnica)','Naturaleza: voluntaria y rotativa','Actividad clave: simulacros periódicos'],
+    cases:[
+      {
+        id:'CASO 01', title:'Simulacro de Incendio Ineficiente', company:'Alimentos Seguros · Planta principal, afueras de Medellín (+200 empleados)',
+        context:'Un simulacro de incendio evidenció fallas serias en la preparación del personal y en la efectividad de los procedimientos de emergencia.',
+        details:[
+          'Varios empleados no siguieron las rutas de evacuación y algunos quedaron atrapados por falta de señalización clara.',
+          'La Brigada, integrada por voluntarios, no había recibido capacitación reciente: respuesta desorganizada y caótica.',
+          'Rutas de evacuación mal señalizadas y algunas salidas bloqueadas por materiales almacenados.',
+          'Comunicación deficiente durante el simulacro, con mensajes contradictorios que causaron confusión.'
+        ],
+        tasks:[
+          'Evaluar los fallos ocurridos durante el simulacro y sus causas.',
+          'Proponer un plan de capacitación y actualización permanente para la Brigada.',
+          'Diseñar mejoras en señalización y comunicación para los próximos simulacros.'
+        ],
+        plan:{
+          preventivo:['Rutas de evacuación despejadas como norma permanente, no solo antes de un simulacro.','Auditorías periódicas que prohíban el almacenamiento de materiales frente a salidas de emergencia.'],
+          comunicacion:['Sistema de alarma y megafonía probado y estandarizado, con un único mensaje claro por tipo de emergencia.','Charlas de evacuación para todo el personal, no solo para la Brigada.'],
+          politica:['Reentrenamiento trimestral obligatorio de la Brigada, verificable con registro de asistencia.','Repetición del simulacro en un plazo corto, corrigiendo lo detectado antes de darlo por superado.'],
+          viabilidad:'Es una intervención de bajo costo (orden, señalización, disciplina de horarios) con alto impacto: protege a más de 200 personas. La resistencia suele ser cultural —falta de hábito— más que económica.'
+        }
+      },
+      {
+        id:'CASO 02', title:'Preparación para Desastres Naturales', company:'Energía Renovable · Plantas eólicas y solares, costa Caribe colombiana',
+        context:'La ubicación geográfica expone a la empresa a huracanes y tormentas tropicales, pero la Brigada no ha sido entrenada específicamente para desastres naturales.',
+        details:[
+          'El plan de emergencia existente es básico y no cubre escenarios de desastre natural.',
+          'Tormentas anteriores causaron daños estructurales e interrumpieron operaciones durante días.',
+          'La comunidad local, dependiente del suministro de energía, expresa preocupación por la preparación de la empresa.',
+          'La gerencia busca un programa más robusto, con simulacros regulares y articulación con autoridades locales.'
+        ],
+        tasks:[
+          'Evaluar la vulnerabilidad actual frente a desastres naturales y las brechas de preparación.',
+          'Proponer un plan integral de preparación y respuesta, con capacitación especializada para la Brigada.',
+          'Diseñar un programa de simulacros regulares en articulación con las autoridades locales.'
+        ],
+        plan:{
+          preventivo:['Plan de contingencia específico para huracanes y tormentas, con protocolos de resguardo de equipos críticos.','Revisión estructural programada antes de la temporada de tormentas, no solo después de un evento.'],
+          comunicacion:['Sistema de alerta temprana coordinado con las autoridades locales de gestión del riesgo y con la comunidad vecina.','Entrenamiento especializado de la Brigada en manejo de desastres naturales, no solo incendios.'],
+          politica:['Convenios formales con autoridades locales y simulacros conjuntos al menos una vez al año.','Reparación prioritaria y documentada de cualquier daño estructural que comprometa la seguridad.'],
+          viabilidad:'Requiere mayor inversión inicial que los demás casos, pero se justifica por la criticidad del suministro energético para la comunidad. La resiliencia debe planearse antes de la temporada de huracanes, no improvisarse después.'
+        }
+      }
+    ]
+  }
+};
+
+/* ============ RENDER HELPERS ============ */
+
+function renderCase(c, tone){
+  return `
+  <div class="case ${tone==='pink'?'pink':''}">
+    <div class="case-head">
+      <div class="hole"></div>
+      <span class="tagid">${c.id}</span>
+      <h4>${c.title}</h4>
+    </div>
+    <div class="case-body">
+      <span class="case-loc">${c.company}</span>
+      <p class="case-context">${c.context}</p>
+      <div class="case-cols">
+        <div>
+          <h5 class="det">◆ Detalles del caso</h5>
+          <ul>${c.details.map(d=>`<li>${d}</li>`).join('')}</ul>
+        </div>
+        <div>
+          <h5 class="task">▸ Tareas para el grupo</h5>
+          <ol>${c.tasks.map(t=>`<li>${t}</li>`).join('')}</ol>
+        </div>
+      </div>
+      ${c.plan ? `
+      <div class="plan">
+        <div class="plan-title"><span class="dot"></span><span>Plan de acción propuesto</span></div>
+        <div class="plan-grid">
+          <div class="plan-card b1">
+            <span class="pk">Medidas preventivas</span>
+            <ul>${c.plan.preventivo.map(x=>`<li>${x}</li>`).join('')}</ul>
+          </div>
+          <div class="plan-card b2">
+            <span class="pk">Comunicación y capacitación</span>
+            <ul>${c.plan.comunicacion.map(x=>`<li>${x}</li>`).join('')}</ul>
+          </div>
+          <div class="plan-card b3">
+            <span class="pk">Políticas internas</span>
+            <ul>${c.plan.politica.map(x=>`<li>${x}</li>`).join('')}</ul>
+          </div>
+          <div class="plan-card b4">
+            <span class="pk">Viabilidad y reflexión</span>
+            <p class="via">${c.plan.viabilidad}</p>
+          </div>
+        </div>
+      </div>` : ''}
+    </div>
+  </div>`;
+}
+
+function renderCommittee(key){
+  const d = COMMITTEES[key];
+  return `
+  <div class="committee-hero">
+    <div class="badge ${d.tone==='pink'?'pink':''}">${d.badge}</div>
+    <div>
+      <h2>${d.title}</h2>
+      <p class="role">${d.role}</p>
+    </div>
+  </div>
+  <div class="committee-meta">${d.meta.map(m=>`<span>${m}</span>`).join('')}</div>
+  ${d.cases.map(c=>renderCase(c, d.tone)).join('')}
+  `;
+}
+
+function renderHome(){
+  return `
+  <div class="hero">
+    <div class="hero-inner">
+      <span class="eyebrow">Problemas ambientales &amp; SST · Casos aplicados</span>
+      <h2>Del papel<br>a la planta.</h2>
+      <p class="lead">Identificar aspectos, impactos y riesgos no es un ejercicio de escritorio: es lo que separa un comité que firma actas de uno que evita el próximo accidente. Este expediente reúne seis casos reales de tres comités —COPASST, Convivencia Laboral y Brigada de Emergencias— para practicar el análisis y la respuesta.</p>
+      <div class="hero-tags">
+        <span>6 casos aplicados</span>
+        <span>3 comités SG-SST</span>
+        <span>Marco GTC 45</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label"><span class="num">1</span><h3>Objetivos del taller</h3></div>
+  <div class="obj-grid">
+    <div class="obj-card">
+      <span class="k">Entorno</span>
+      <p>Identificar y discutir problemas ambientales y de SST observados en el entorno laboral o social, relacionándolos con los planes y programas presentados en clase.</p>
+    </div>
+    <div class="obj-card">
+      <span class="k">Conceptos</span>
+      <p>Apropiar los conceptos de aspecto, impacto y riesgo, y las estrategias de prevención y control de impactos ambientales, accidentes de trabajo y enfermedades laborales.</p>
+    </div>
+    <div class="obj-card">
+      <span class="k">Matriz de peligros</span>
+      <p>Identificar y evaluar riesgos y peligros asociados al proceso formativo, aplicando la matriz de identificación y evaluación de peligros (GTC 45).</p>
+    </div>
+    <div class="obj-card">
+      <span class="k">Objetivo central</span>
+      <p><b>Aplicar el conocimiento teórico sobre los comités de seguridad y salud en el trabajo a situaciones prácticas</b>, fomentando la capacidad de análisis y resolución de problemas.</p>
+    </div>
+  </div>
+
+  <div class="section-label pink"><span class="num">2</span><h3>Cómo se desarrolla la actividad</h3></div>
+  <ol class="instr-list">
+    <li><span class="idx">1</span><div><b>Selección individual del caso</b><p>Cada aprendiz selecciona y analiza un caso de las fichas 07 a 09 (COPASST, Convivencia Laboral o Brigada de Emergencias), identificando con precisión los problemas presentes.</p></div></li>
+    <li><span class="idx">2</span><div><b>Plan de acción en grupo</b><p>El grupo construye un plan detallado con cuatro componentes: medidas preventivas y correctivas, estrategias de comunicación y capacitación, recomendaciones de política interna y viabilidad de la propuesta — visibles como plantilla en cada caso de este expediente.</p></div></li>
+    <li><span class="idx">3</span><div><b>Medidas preventivas y correctivas</b><p>Se distingue entre lo que evita que el problema ocurra (preventivo) y lo que corrige la situación ya generada (correctivo).</p></div></li>
+    <li><span class="idx">4</span><div><b>Comunicación y capacitación</b><p>Se definen los canales, mensajes y formación necesarios para que la medida se sostenga en el tiempo y no dependa de una sola persona.</p></div></li>
+    <li><span class="idx">5</span><div><b>Recomendaciones de política interna</b><p>Se proponen ajustes a normas, procedimientos o presupuestos de la organización que hagan estructural la solución.</p></div></li>
+    <li><span class="idx">6</span><div><b>Reflexión sobre viabilidad</b><p>El grupo discute qué tan realista es implementar lo propuesto: costo, tiempo, resistencia esperada y respaldo directivo necesario.</p></div></li>
+  </ol>
+
+  <div class="section-label"><span class="num">3</span><h3>Recorrido del expediente</h3></div>
+  <div class="nav-cards">
+    ${PAGES.filter(p=>p.id!=='inicio').map((p,i)=>`
+      <button class="nav-card ${p.tab}" onclick="goTo('${p.id}')">
+        <span class="tagno">FICHA 0${i+2}</span>
+        <h4>${p.label}</h4>
+        <p>${navDesc(p.id)}</p>
+      </button>
+    `).join('')}
+  </div>
+  `;
+}
+
+function navDesc(id){
+  const d = {
+    sgsst:'El ciclo PHVA y la integración entre el SG-SST y la gestión ambiental de la organización.',
+    accidentes:'Qué es un accidente de trabajo, cómo se clasifica y cómo se investiga en Colombia.',
+    legislacion:'Las normas colombianas que sostienen cada comité y cada obligación del SG-SST.',
+    ambiental:'Las normas ambientales colombianas: licencias, vertimientos, residuos peligrosos y gestión del riesgo de desastres.',
+    peligros:'La cadena aspecto → impacto → riesgo y la matriz GTC 45, con ejemplos de los casos del taller.',
+    controles:'La jerarquía de controles y qué nivel aplica mejor a cada uno de los seis casos.',
+    copasst:'Mantenimiento deficiente y falta de señalización: dos casos de riesgo físico y locativo.',
+    convivencia:'Conflicto interdepartamental y acoso no atendido: riesgo psicosocial en acción.',
+    brigada:'Simulacro fallido y desastres naturales: la respuesta de emergencia bajo presión.'
+  };
+  return d[id] || '';
+}
+
+function renderSgsst(){
+  return `
+  <div class="section-label"><span class="num">01</span><h3>Marco de gestión</h3></div>
+  <h2 style="font-size:clamp(24px,3.4vw,34px); margin-bottom:14px;">Sistema de Gestión SST y Ambiental</h2>
+  <p class="lede">El Decreto 1072 de 2015 exige que el Sistema de Gestión de la Seguridad y Salud en el Trabajo (SG-SST) funcione bajo el mismo ciclo de mejora continua que un sistema de gestión ambiental (por ejemplo, bajo ISO 14001): planear, ejecutar, verificar resultados y actuar sobre las desviaciones. Muchas organizaciones integran ambos sistemas en un Sistema Integrado de Gestión (SIG), porque comparten herramientas: la matriz de aspectos e impactos ambientales y la matriz de peligros y riesgos laborales se construyen con la misma lógica.</p>
+
+  <div class="chain">
+    <div class="link hi">
+      <span class="k">Planear</span>
+      <h4>P</h4>
+      <p>Evaluación inicial, política de SST y ambiental, identificación de peligros y aspectos, objetivos medibles y plan de trabajo anual.</p>
+    </div>
+    <div class="link hi2">
+      <span class="k">Hacer</span>
+      <h4>H</h4>
+      <p>Ejecución de los controles definidos: mantenimiento, señalización, capacitación, gestión de residuos, respuesta ante emergencias.</p>
+    </div>
+    <div class="link hi3">
+      <span class="k">Verificar</span>
+      <h4>V</h4>
+      <p>Auditorías internas, indicadores de accidentalidad e impacto ambiental, revisión por la alta dirección.</p>
+    </div>
+    <div class="link hi">
+      <span class="k">Actuar</span>
+      <h4>A</h4>
+      <p>Acciones correctivas y preventivas, y ajuste de la planificación para el siguiente ciclo. El sistema nunca se da por "terminado".</p>
+    </div>
+  </div>
+
+  <div class="section-label pink"><span class="num">02</span><h3>Elementos mínimos del SG-SST (Decreto 1072 de 2015)</h3></div>
+  <div class="split">
+    <div class="info-card">
+      <h4>Gestión de peligros y riesgos</h4>
+      <ul>
+        <li>Identificación de peligros y valoración de riesgos (matriz GTC 45).</li>
+        <li>Medidas de prevención y control jerarquizadas.</li>
+        <li>Gestión del cambio ante nuevos procesos, equipos o instalaciones.</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Gestión de emergencias y del entorno</h4>
+      <ul>
+        <li>Plan de prevención, preparación y respuesta ante emergencias.</li>
+        <li>Brigada de emergencias entrenada y dotada.</li>
+        <li>Gestión ambiental de residuos, vertimientos y emisiones asociadas a la operación.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-label"><span class="num">03</span><h3>Los tres comités dentro del sistema</h3></div>
+  <p class="lede" style="margin-bottom:8px;">COPASST, Comité de Convivencia Laboral y Brigada de Emergencias no son estructuras aisladas: son el mecanismo de participación y ejecución que hace operativo el ciclo PHVA en el día a día. Cuando —como en los casos de este taller— sus recomendaciones no se implementan a tiempo, el sistema completo deja de cumplir su función preventiva, sin importar qué tan bien esté documentado en el papel.</p>
+  `;
+}
+
+function renderAccidentes(){
+  return `
+  <div class="section-label pink"><span class="num">01</span><h3>Definiciones clave</h3></div>
+  <h2 style="font-size:clamp(24px,3.4vw,34px); margin-bottom:14px;">Accidentes de Trabajo</h2>
+  <p class="lede">Un <b>accidente de trabajo</b> es todo suceso repentino que sobreviene por causa o con ocasión del trabajo y que produce una lesión orgánica, una perturbación funcional, una invalidez o la muerte (Decreto 1295 de 1994, modificado por la Ley 1562 de 2012). También se consideran de origen laboral los ocurridos en el trayecto habitual entre la residencia y el trabajo, y algunos accidentes deportivos o recreativos cuando la empresa actúa como patrocinador oficial.</p>
+
+  <div class="split">
+    <div class="info-card">
+      <h4>Accidente vs. incidente</h4>
+      <p>El <b>incidente</b> (o "casi accidente") es un suceso que tuvo el potencial de causar daño pero no lo hizo. Reportarlo es tan importante como reportar el accidente: es la señal de alerta más barata que existe. Los cinco incidentes menores de Metales Industriales, si no se investigan a fondo, tienden a repetirse hasta convertirse en uno mayor.</p>
+    </div>
+    <div class="info-card">
+      <h4>Investigación (Resolución 1401 de 2007)</h4>
+      <ol>
+        <li>Reporte inmediato del suceso (Formulario Único de Reporte, FURAT).</li>
+        <li>Conformación del equipo investigador, con participación del COPASST.</li>
+        <li>Análisis de causas inmediatas (actos y condiciones inseguras) y causas básicas (factores del sistema de gestión).</li>
+        <li>Definición de un plan de acción con responsables y fechas.</li>
+        <li>Seguimiento a la eficacia de las medidas implementadas.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="section-label"><span class="num">02</span><h3>Clasificación por severidad</h3></div>
+  <div class="pill-row">
+    <span class="pill sev-leve">Leve — sin incapacidad o incapacidad menor</span>
+    <span class="pill sev-inc">Incapacitante — genera incapacidad temporal o permanente</span>
+    <span class="pill sev-mortal">Mortal — causa la muerte del trabajador</span>
+  </div>
+
+  <div class="section-label"><span class="num">03</span><h3>Ejemplos del taller</h3></div>
+  <div class="example-row">
+    <div class="ex"><b>Metales Industriales</b>Cinco eventos clasificables como leves (cortes y contusiones), pero cuya acumulación revela una causa básica no resuelta: el mantenimiento pospuesto.</div>
+    <div class="ex"><b>Construcciones del Futuro</b>Un evento incapacitante (fractura de pierna) por caída de altura, con investigación activa del Ministerio del Trabajo.</div>
+    <div class="ex"><b>Alimentos Seguros</b>El simulacro no derivó en accidente real, pero expuso condiciones —rutas bloqueadas, brigada sin entrenar— que en una emergencia real sí lo habrían generado.</div>
+  </div>
+  `;
+}
+
+function renderControles(){
+  return `
+  <div class="section-label"><span class="num">01</span><h3>De la identificación a la acción</h3></div>
+  <h2 style="font-size:clamp(24px,3.4vw,34px); margin-bottom:14px;">Medidas de Control</h2>
+  <p class="lede">Identificar un peligro no protege a nadie por sí solo: lo que reduce el riesgo es el control que se aplica sobre él. La jerarquía de controles ordena las opciones de la más eficaz (actúa sobre la fuente) a la menos eficaz (depende de que la persona la use bien, todos los días).</p>
+
+  <table class="control-table">
+    <thead><tr><th>Nivel</th><th>En qué consiste</th><th>Ejemplo en el taller</th></tr></thead>
+    <tbody>
+      <tr><td class="lvl">1 · Eliminación</td><td>Quitar el peligro por completo del proceso.</td><td>Retirar del servicio una máquina irreparable en vez de repararla parcialmente.</td></tr>
+      <tr><td class="lvl">2 · Sustitución</td><td>Reemplazar el peligro por uno de menor riesgo.</td><td>Cambiar un proceso manual de corte por uno con menor exposición a piezas cortantes.</td></tr>
+      <tr><td class="lvl">3 · Ing. / colectivos</td><td>Barreras físicas o rediseño que separan a la persona del peligro.</td><td>Reinstalar la baranda de protección en la obra; guardas fijas en las máquinas de corte.</td></tr>
+      <tr><td class="lvl">4 · Administrativos</td><td>Procedimientos, señalización, capacitación, rotación de tareas.</td><td>Protocolo de mediación del Comité de Convivencia; charlas diarias de seguridad; cronogramas de mantenimiento.</td></tr>
+      <tr><td class="lvl">5 · EPP</td><td>Equipos de protección personal: el último recurso, no el primero.</td><td>Guantes y gafas de seguridad mientras se ejecuta la reparación definitiva de una máquina.</td></tr>
+    </tbody>
+  </table>
+  <div class="priority-bar"><span class="p1"></span><span class="p2"></span><span class="p3"></span><span class="p4"></span><span class="p5"></span></div>
+  <div class="priority-labels"><span>Más eficaz</span><span>Menos eficaz</span></div>
+
+  <div class="section-label pink"><span class="num">02</span><h3>Por qué los planes de acción del taller priman controles 3 y 4</h3></div>
+  <p class="lede" style="margin-bottom:6px;">En casi ningún caso del expediente es posible eliminar el peligro por completo: no se puede dejar de construir, de producir o de operar una planta de energía. Por eso los planes de acción de cada caso combinan controles de ingeniería (guardas, barandas, señalización) con controles administrativos (protocolos, capacitación, cronogramas) y dejan el EPP como complemento, nunca como única medida.</p>
+  `;
+}
+
+function renderPeligros(){
+  return `
+  <div class="section-label"><span class="num">01</span><h3>Marco conceptual</h3></div>
+  <h2 style="font-size:clamp(24px,3.4vw,34px); margin-bottom:14px;">Identificación de Peligros: Aspectos, Impactos y Riesgos</h2>
+  <p class="lede">Antes de analizar un caso hay que nombrar bien sus partes. Estos tres términos no son sinónimos: cada uno responde a una pregunta distinta, y confundirlos es la razón por la que muchos planes de acción atacan el síntoma equivocado.</p>
+
+  <div class="chain">
+    <div class="link hi">
+      <span class="k">¿Qué existe?</span>
+      <h4>Aspecto</h4>
+      <p>Elemento de una actividad, proceso o instalación que puede interactuar con el ambiente o con la seguridad de las personas. Es un hecho, no un juicio: una máquina sin guarda, un vertimiento de aceites, la ausencia de señalización.</p>
+    </div>
+    <div class="link hi2">
+      <span class="k">¿Qué genera?</span>
+      <h4>Impacto</h4>
+      <p>La consecuencia concreta que ese aspecto produce sobre las personas, el ambiente o la operación: una lesión, un conflicto interpersonal, una interrupción del servicio, contaminación de un recurso.</p>
+    </div>
+    <div class="link hi3">
+      <span class="k">¿Qué probabilidad hay?</span>
+      <h4>Riesgo</h4>
+      <p>La combinación entre la probabilidad de que el impacto ocurra y la severidad de sus consecuencias si ocurre. Es lo que un comité prioriza y controla, no lo que simplemente describe.</p>
+    </div>
+  </div>
+
+  <div class="section-label pink"><span class="num">02</span><h3>La cadena, aplicada a los casos del taller</h3></div>
+  <div class="example-row">
+    <div class="ex"><b>Metales Industriales</b>Aspecto: máquinas sin mantenimiento → Impacto: cortes y contusiones → Riesgo: mecánico, alto por frecuencia acumulada.</div>
+    <div class="ex"><b>Construcciones del Futuro</b>Aspecto: baranda retirada sin señalizar → Impacto: caída de altura → Riesgo: locativo, alto por severidad (fractura).</div>
+    <div class="ex"><b>Tecnologías Avanzadas</b>Aspecto: falta de protocolo de mediación → Impacto: hostilidad y quejas de acoso → Riesgo: psicosocial, creciente en el tiempo.</div>
+    <div class="ex"><b>Servicios Financieros Globales</b>Aspecto: ausencia de ruta de investigación de quejas → Impacto: discriminación no resuelta → Riesgo: psicosocial y reputacional.</div>
+    <div class="ex"><b>Alimentos Seguros</b>Aspecto: brigada sin capacitación reciente → Impacto: evacuación caótica → Riesgo: de emergencia, alto por exposición de +200 personas.</div>
+    <div class="ex"><b>Energía Renovable</b>Aspecto: brigada sin entrenamiento en desastres naturales → Impacto: daño estructural e interrupción → Riesgo: ambiental y operativo, estacional.</div>
+  </div>
+
+  <div class="section-label"><span class="num">03</span><h3>Por qué importa el orden</h3></div>
+  <p class="lede" style="margin-bottom:8px;">Un plan de acción que empieza por el riesgo sin identificar el aspecto que lo origina tiende a controlar el efecto (comprar más EPP, sancionar) en vez de la causa (reparar la máquina, capacitar a la brigada, crear el protocolo de mediación). Por eso cada ficha de caso en este expediente separa <b>detalles</b> (los aspectos observables) de <b>tareas</b> (las acciones que deben apuntar a esos aspectos, no solo a sus consecuencias).</p>
+
+  <div class="section-label pink"><span class="num">04</span><h3>Herramienta técnica: la matriz GTC 45</h3></div>
+  <p class="lede">La matriz de identificación de peligros y valoración de riesgos —construida según la metodología de la GTC 45— es el puente entre "sabemos que algo está mal" y "sabemos exactamente qué controlar primero". Se construye en cinco pasos.</p>
+
+  <ol class="matrix-steps">
+    <li><b>Identificar procesos y actividades</b><span>Se listan las tareas reales del área: corte y prensado, montaje de andamios, atención de quejas, evacuación de planta. No procesos genéricos, sino los que efectivamente ocurren.</span></li>
+    <li><b>Identificar los peligros presentes</b><span>Se clasifican por tipo: mecánico, físico, químico, biológico, biomecánico, locativo, eléctrico, psicosocial o de fenómenos naturales, según la GTC 45.</span></li>
+    <li><b>Determinar los efectos posibles</b><span>Qué le puede pasar a una persona o al ambiente si el peligro se materializa: corte, caída, estrés laboral, contaminación, interrupción operativa.</span></li>
+    <li><b>Valorar el riesgo</b><span>Se combina la probabilidad (nivel de deficiencia × nivel de exposición) con la severidad de la consecuencia, obteniendo un nivel de riesgo: I (no aceptable), II (no aceptable o con control específico), III (mejorable) o IV (aceptable).</span></li>
+    <li><b>Definir los controles</b><span>Se aplican en orden de jerarquía: eliminación, sustitución, controles de ingeniería, controles administrativos y, solo al final, elementos de protección personal (EPP) — desarrollado en la siguiente ficha.</span></li>
+  </ol>
+
+  <div class="section-label"><span class="num">05</span><h3>Ejemplo aplicado — Metales Industriales</h3></div>
+  <table class="gtc-table">
+    <thead><tr><th>Proceso</th><th>Peligro</th><th>Efecto posible</th><th>Nivel de riesgo</th><th>Control propuesto</th></tr></thead>
+    <tbody>
+      <tr><td>Corte y prensado</td><td>Mecánico — piezas sin guarda</td><td>Corte, contusión, atrapamiento</td><td>I — No aceptable</td><td>Restaurar guardas + mantenimiento preventivo programado</td></tr>
+      <tr><td>Reporte de fallas</td><td>Administrativo — canal poco efectivo</td><td>Retraso en reparaciones críticas</td><td>III — Mejorable</td><td>Sistema de reporte con priorización visible para el COPASST</td></tr>
+    </tbody>
+  </table>
+  <p class="gtc-caption">Este mismo ejercicio puede repetirse con cada uno de los seis casos del expediente como práctica del grupo.</p>
+  `;
+}
+
+function renderLegislacion(){
+  return `
+  <div class="section-label"><span class="num">01</span><h3>Marco normativo</h3></div>
+  <h2 style="font-size:clamp(24px,3.4vw,34px); margin-bottom:14px;">Legislación Laboral SST en Colombia</h2>
+  <p class="lede">Cada comité del taller responde a una norma específica. Conocerla no es un trámite: es lo que le da al comité autoridad para exigir que sus recomendaciones se cumplan, incluso bajo presión de plazos o presupuesto —como ocurre en varios de los casos.</p>
+
+  <table class="law">
+    <thead><tr><th>Norma</th><th>Qué establece</th><th>Relación con los casos</th></tr></thead>
+    <tbody>
+      <tr><td class="norm">Ley 9 de 1979</td><td>Código Sanitario Nacional; título III sobre salud ocupacional, base histórica de la normativa colombiana en la materia.</td><td>Fundamento general de la obligación de proteger la salud en el trabajo.</td></tr>
+      <tr><td class="norm">Res. 2400 de 1979</td><td>Estatuto de Seguridad Industrial: condiciones mínimas en edificios, máquinas, herramientas y locativas.</td><td>Guardas de maquinaria y orden en zonas de riesgo (Metales Industriales, Construcciones del Futuro).</td></tr>
+      <tr><td class="norm">Decreto 1295 de 1994</td><td>Organiza el Sistema General de Riesgos Laborales y define accidente de trabajo y enfermedad laboral.</td><td>Marco para calificar y reportar los incidentes de los casos de COPASST.</td></tr>
+      <tr><td class="norm">Ley 1010 de 2006</td><td>Define, previene y sanciona el acoso laboral en sus distintas modalidades.</td><td>Base directa para el caso de acoso no atendido (Servicios Financieros Globales).</td></tr>
+      <tr><td class="norm">Res. 2646 de 2008</td><td>Identificación y prevención del riesgo psicosocial y establece el rol del Comité de Convivencia Laboral.</td><td>Marco de actuación del comité en ambos casos de convivencia.</td></tr>
+      <tr><td class="norm">Ley 1562 de 2012</td><td>Redefine el Sistema de Riesgos Laborales e introduce el concepto de Seguridad y Salud en el Trabajo (SST).</td><td>Da nombre y alcance actuales al sistema que administran los tres comités.</td></tr>
+      <tr><td class="norm">Decreto 1072 de 2015</td><td>Decreto Único Reglamentario del Sector Trabajo; su capítulo 6 exige implementar el SG-SST, incluyendo COPASST y Brigada de Emergencias.</td><td>Obliga a que existan y funcionen los tres comités del taller.</td></tr>
+      <tr><td class="norm">Res. 0312 de 2019</td><td>Estándares mínimos del SG-SST según tamaño y riesgo de la empresa.</td><td>Define qué tan robustos deben ser los programas de mantenimiento, señalización y brigada en cada empresa del taller.</td></tr>
+      <tr><td class="norm">GTC 45</td><td>Guía Técnica Colombiana para identificación de peligros y valoración de riesgos (no es ley, pero es el estándar técnico de referencia).</td><td>Metodología que se desarrolla en la siguiente ficha del expediente.</td></tr>
+    </tbody>
+  </table>
+  <div class="law-note">Esta tabla resume el propósito general de cada norma con fines formativos; para la aplicación de un caso real conviene siempre verificar el texto vigente y sus actualizaciones ante el Ministerio del Trabajo.</div>
+  `;
+}
+
+function renderLegislacionAmbiental(){
+  return `
+  <div class="section-label pink"><span class="num">01</span><h3>Marco normativo ambiental</h3></div>
+  <h2 style="font-size:clamp(24px,3.4vw,34px); margin-bottom:14px;">Legislación Ambiental en Colombia</h2>
+  <p class="lede">Junto a la normativa laboral, toda organización con operación industrial, de construcción o de generación de energía está sujeta a un marco ambiental propio. Este marco es el que sostiene la parte "ambiental" del taller: vertimientos, residuos, licencias y respuesta ante fenómenos naturales, temas que atraviesan varios de los seis casos.</p>
+
+  <table class="law">
+    <thead><tr><th>Norma</th><th>Qué establece</th><th>Relación con los casos</th></tr></thead>
+    <tbody>
+      <tr><td class="norm">Decreto 2811 de 1974</td><td>Código Nacional de los Recursos Naturales Renovables; marco general de protección del ambiente y uso de recursos naturales.</td><td>Fundamento histórico de toda obligación ambiental de una empresa industrial o energética.</td></tr>
+      <tr><td class="norm">Ley 99 de 1993</td><td>Crea el Ministerio de Ambiente y el Sistema Nacional Ambiental (SINA); introduce la licencia ambiental y el principio de precaución.</td><td>Exige licencia y permisos ambientales para operaciones de alto impacto, como plantas eólicas y solares (Energía Renovable).</td></tr>
+      <tr><td class="norm">Decreto 1076 de 2015</td><td>Decreto Único Reglamentario del Sector Ambiente: compila permisos de vertimientos, emisiones atmosféricas, aprovechamiento forestal y licenciamiento.</td><td>Regula el vertimiento de aceites y residuos generados por el mantenimiento de maquinaria (Metales Industriales).</td></tr>
+      <tr><td class="norm">Ley 1333 de 2009</td><td>Establece el procedimiento sancionatorio ambiental: investigación, medidas preventivas y multas ante infracciones.</td><td>Marco bajo el cual actuaría la autoridad ambiental si un vertimiento o residuo no gestionado llega a reportarse.</td></tr>
+      <tr><td class="norm">Decreto 1076/2015, cap. 6 (ex Decreto 4741/2005)</td><td>Gestión integral de residuos o desechos peligrosos: almacenamiento, transporte y disposición final.</td><td>Aplica a los residuos de mantenimiento (aceites usados, solventes) que genera la sección de corte y prensado.</td></tr>
+      <tr><td class="norm">Resolución 2254 de 2017</td><td>Norma de calidad del aire ambiente y establece los niveles máximos permisibles de contaminantes.</td><td>Referente para procesos con emisiones o material particulado, como el corte y prensado industrial.</td></tr>
+      <tr><td class="norm">Ley 1523 de 2012</td><td>Adopta la Política Nacional de Gestión del Riesgo de Desastres y crea el Sistema Nacional (SNGRD).</td><td>Marco directo para el caso de Energía Renovable: exige coordinación con autoridades locales de gestión del riesgo ante huracanes.</td></tr>
+      <tr><td class="norm">ISO 14001 (estándar, no ley)</td><td>Norma internacional voluntaria para sistemas de gestión ambiental, basada en el ciclo PHVA.</td><td>Referencia técnica cuando el SG-SST se integra con la gestión ambiental en un Sistema Integrado de Gestión (ver ficha 02).</td></tr>
+    </tbody>
+  </table>
+  <div class="law-note">Esta tabla resume el propósito general de cada norma con fines formativos; para la aplicación de un caso real conviene siempre verificar el texto vigente ante el Ministerio de Ambiente y Desarrollo Sostenible o la autoridad ambiental competente.</div>
+
+  <div class="section-label"><span class="num">02</span><h3>¿Quién vigila el cumplimiento?</h3></div>
+  <div class="split">
+    <div class="info-card">
+      <h4>ANLA</h4>
+      <p>La Autoridad Nacional de Licencias Ambientales otorga y vigila las licencias de proyectos de impacto nacional o de gran envergadura: por ejemplo, la construcción y operación de plantas de generación de energía eólica o solar como las de Energía Renovable.</p>
+    </div>
+    <div class="info-card">
+      <h4>CAR — Corporaciones Autónomas Regionales</h4>
+      <p>Autoridades ambientales de carácter regional que otorgan permisos de vertimientos, emisiones y aprovechamiento de recursos para operaciones de menor escala, como las de una planta industrial o una obra de construcción.</p>
+    </div>
+  </div>
+  `;
+}
+
+/* ============ ROUTER ============ */
+
+function buildTabs(){
+  const bar = document.getElementById('tabbar');
+  bar.innerHTML = PAGES.map((p,i)=>`
+    <button class="tab ${p.tab==='pink'?'pink':''}" data-id="${p.id}" onclick="goTo('${p.id}')">
+      <span class="n">0${i+1}</span>${p.label}
+    </button>`).join('');
+}
+
+function renderPage(id){
+  switch(id){
+    case 'inicio': return renderHome();
+    case 'sgsst': return renderSgsst();
+    case 'accidentes': return renderAccidentes();
+    case 'legislacion': return renderLegislacion();
+    case 'ambiental': return renderLegislacionAmbiental();
+    case 'peligros': return renderPeligros();
+    case 'controles': return renderControles();
+    case 'copasst': return renderCommittee('copasst');
+    case 'convivencia': return renderCommittee('convivencia');
+    case 'brigada': return renderCommittee('brigada');
+    default: return renderHome();
+  }
+}
+
+function goTo(id){
+  document.getElementById('app').innerHTML = `<div class="page active">${renderPage(id)}</div>`;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.id===id));
+  const idx = PAGES.findIndex(p=>p.id===id);
+  const n = idx+1 < 10 ? '0'+(idx+1) : (idx+1);
+  document.querySelector('.reg-tag').innerHTML = `FICHA <b>${n}</b> / 10`;
+  window.scrollTo({top:0, behavior:'smooth'});
+  history.replaceState(null, '', '#'+id);
+}
+
+buildTabs();
+goTo(location.hash ? location.hash.slice(1) : 'inicio');
+</script>
+</body>
+</html>
